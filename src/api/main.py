@@ -4,7 +4,7 @@ Agricultural Market Intelligence & Crop Price Forecasting Platform (YIP 9.0).
 """
 
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -48,6 +48,14 @@ def health_check():
         "project": "Kerala Young Innovators Programme (YIP 9.0)",
         "version": "1.0.0",
         "supported_commodities": ["Arecanut", "Black Pepper", "Copra", "Banana (Nendran)", "Rubber (RSS-4)", "Cardamom"]
+    }
+
+@app.get("/api/index.py", include_in_schema=False)
+def vercel_debug(request: Request):
+    return {
+        "headers": dict(request.headers),
+        "url_path": request.url.path,
+        "scope_path": request.scope.get("path")
     }
 
 @app.get("/", include_in_schema=False)
