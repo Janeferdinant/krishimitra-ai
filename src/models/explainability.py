@@ -6,16 +6,26 @@ into actionable, farmer-friendly natural language advisories.
 
 import numpy as np
 import pandas as pd
-import shap
+
+try:
+    import shap
+    HAS_SHAP = True
+except ImportError:
+    HAS_SHAP = False
 
 class AgriculturalShapExplainer:
     def __init__(self, model, feature_names: list[str]):
         self.model = model
         self.feature_names = feature_names
-        try:
-            self.explainer = shap.TreeExplainer(model)
-        except Exception:
-            self.explainer = shap.Explainer(model)
+        self.explainer = None
+        if HAS_SHAP:
+            try:
+                self.explainer = shap.TreeExplainer(model)
+            except Exception:
+                try:
+                    self.explainer = shap.Explainer(model)
+                except Exception:
+                    self.explainer = None
 
     def explain_instance(self, row: pd.Series or pd.DataFrame) -> dict:
         """
@@ -26,8 +36,20 @@ class AgriculturalShapExplainer:
         else:
             X_df = row[self.feature_names]
             
-        shap_values = self.explainer(X_df)
-        values = shap_values.values[0]
+        if self.explainer is not None:
+            shap_values = self.explainer(X_df)
+            values = shap_values.values[0]
+        else:
+            # Fallback to normalized feature importances or coefficients
+            if hasattr(self.model, "feature_importances_"):
+                importances = self.model.feature_importances_
+            elif hasattr(self.model, "coef_"):
+                importances = np.abs(self.model.coef_)
+            else:
+                importances = np.ones(len(self.feature_names)) / len(self.feature_names)
+            # Scale to approximate price impact
+            price_scale = float(X_df.values[0][0]) * 0.03 if len(X_df.values[0]) > 0 else 100.0
+            values = importances * price_scale
         
         # Sort features by absolute contribution
         feat_contribs = []

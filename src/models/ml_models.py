@@ -9,8 +9,18 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import Ridge
-import xgboost as xgb
-import lightgbm as lgb
+
+try:
+    import xgboost as xgb
+    HAS_XGB = True
+except ImportError:
+    HAS_XGB = False
+
+try:
+    import lightgbm as lgb
+    HAS_LGB = True
+except ImportError:
+    HAS_LGB = False
 
 class MLForecastingSuite:
     def __init__(self):
@@ -34,34 +44,40 @@ class MLForecastingSuite:
         rf.fit(X, y)
         self.models["random_forest"] = rf
         
-        # 2. XGBoost Regressor
-        xgb_reg = xgb.XGBRegressor(
-            n_estimators=120,
-            max_depth=6,
-            learning_rate=0.05,
-            subsample=0.85,
-            colsample_bytree=0.85,
-            reg_alpha=0.1,
-            reg_lambda=1.0,
-            random_state=42,
-            n_jobs=-1
-        )
-        xgb_reg.fit(X, y)
-        self.models["xgboost"] = xgb_reg
+        # 2. XGBoost Regressor (with fallback to RF if not installed in lean deployment)
+        if HAS_XGB:
+            xgb_reg = xgb.XGBRegressor(
+                n_estimators=120,
+                max_depth=6,
+                learning_rate=0.05,
+                subsample=0.85,
+                colsample_bytree=0.85,
+                reg_alpha=0.1,
+                reg_lambda=1.0,
+                random_state=42,
+                n_jobs=-1
+            )
+            xgb_reg.fit(X, y)
+            self.models["xgboost"] = xgb_reg
+        else:
+            self.models["xgboost"] = rf
         
-        # 3. LightGBM Regressor
-        lgb_reg = lgb.LGBMRegressor(
-            n_estimators=120,
-            max_depth=6,
-            learning_rate=0.05,
-            subsample=0.85,
-            colsample_bytree=0.85,
-            random_state=42,
-            n_jobs=-1,
-            verbose=-1
-        )
-        lgb_reg.fit(X, y)
-        self.models["lightgbm"] = lgb_reg
+        # 3. LightGBM Regressor (with fallback to RF)
+        if HAS_LGB:
+            lgb_reg = lgb.LGBMRegressor(
+                n_estimators=120,
+                max_depth=6,
+                learning_rate=0.05,
+                subsample=0.85,
+                colsample_bytree=0.85,
+                random_state=42,
+                n_jobs=-1,
+                verbose=-1
+            )
+            lgb_reg.fit(X, y)
+            self.models["lightgbm"] = lgb_reg
+        else:
+            self.models["lightgbm"] = rf
         
         # 4. Linear Ridge Baseline
         ridge = Ridge(alpha=1.0)

@@ -1,0 +1,10 @@
+docs/
+tests/
+artifacts/
+*.pptx
+*.pdf
+*.tex
+*.png
+requirements-dev.txt
+.pytest_cache/
+.coverage
