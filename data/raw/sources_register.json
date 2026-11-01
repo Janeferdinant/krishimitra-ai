@@ -1,0 +1,49 @@
+{
+  "agmarknet": {
+    "name": "Agricultural Marketing Information Network (AGMARKNET)",
+    "agency": "Directorate of Marketing & Inspection (DMI), Ministry of Agriculture & Farmers Welfare, GoI",
+    "url": "https://agmarknet.gov.in/",
+    "access_protocol": "Open Web Portal & Daily Mandi Bulletins",
+    "parameters": [
+      "Date",
+      "Commodity",
+      "Variety",
+      "Market",
+      "District",
+      "State",
+      "Arrivals (Tonnes)",
+      "Min Price (Rs/Qtl)",
+      "Max Price (Rs/Qtl)",
+      "Modal Price (Rs/Qtl)"
+    ],
+    "coverage": "Kerala APMC Markets & Major Terminal Spices/Plantation Hubs (2020\u20132025)"
+  },
+  "data_gov_in": {
+    "name": "Open Government Data (OGD) Platform India",
+    "agency": "National Informatics Centre (NIC)",
+    "url": "https://www.data.gov.in/",
+    "parameters": [
+      "Wholesale daily prices and arrivals of agricultural commodities"
+    ],
+    "license": "National Data Sharing and Accessibility Policy (NDSAP)"
+  },
+  "nasa_power_imd": {
+    "name": "NASA POWER & India Meteorological Department (IMD)",
+    "url": "https://power.larc.nasa.gov/ and https://mausam.imd.gov.in/",
+    "parameters": [
+      "T2M (Mean Temp)",
+      "T2M_MAX (Max Temp)",
+      "T2M_MIN (Min Temp)",
+      "PRECTOTCORR (Precipitation)",
+      "RH2M (Relative Humidity)"
+    ],
+    "spatial_resolution": "0.5 x 0.5 degree grid mapped to Kerala Agro-Climatic Zones"
+  },
+  "enam": {
+    "name": "National Agriculture Market (e-NAM)",
+    "url": "https://www.enam.gov.in/",
+    "parameters": [
+      "Inter-mandi trade flows and modal prices"
+    ]
+  }
+}

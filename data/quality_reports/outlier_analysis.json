@@ -1,0 +1,80 @@
+{
+  "Arecanut": {
+    "record_count": 4384,
+    "mean_price": 47117.71,
+    "std_price": 5232.78,
+    "iqr_bounds": [
+      31917.46,
+      61729.79
+    ],
+    "iqr_outlier_count": 15,
+    "zscore_outlier_count": 8,
+    "isolation_forest_outliers": 66,
+    "treatment_policy": "Preserved genuine structural shocks (e.g. Onam festival demand, monsoon supply disruption) while bounding non-physical negative/zero prices"
+  },
+  "Banana": {
+    "record_count": 4384,
+    "mean_price": 4560.84,
+    "std_price": 700.26,
+    "iqr_bounds": [
+      2961.94,
+      5924.05
+    ],
+    "iqr_outlier_count": 309,
+    "zscore_outlier_count": 75,
+    "isolation_forest_outliers": 66,
+    "treatment_policy": "Preserved genuine structural shocks (e.g. Onam festival demand, monsoon supply disruption) while bounding non-physical negative/zero prices"
+  },
+  "Black Pepper": {
+    "record_count": 4384,
+    "mean_price": 64270.46,
+    "std_price": 9265.45,
+    "iqr_bounds": [
+      38488.23,
+      89475.31
+    ],
+    "iqr_outlier_count": 9,
+    "zscore_outlier_count": 0,
+    "isolation_forest_outliers": 66,
+    "treatment_policy": "Preserved genuine structural shocks (e.g. Onam festival demand, monsoon supply disruption) while bounding non-physical negative/zero prices"
+  },
+  "Cardamom": {
+    "record_count": 2192,
+    "mean_price": 249034.51,
+    "std_price": 36733.97,
+    "iqr_bounds": [
+      130966.01,
+      367167.75
+    ],
+    "iqr_outlier_count": 0,
+    "zscore_outlier_count": 0,
+    "isolation_forest_outliers": 33,
+    "treatment_policy": "Preserved genuine structural shocks (e.g. Onam festival demand, monsoon supply disruption) while bounding non-physical negative/zero prices"
+  },
+  "Copra": {
+    "record_count": 2192,
+    "mean_price": 12883.44,
+    "std_price": 1472.17,
+    "iqr_bounds": [
+      8566.95,
+      17125.35
+    ],
+    "iqr_outlier_count": 0,
+    "zscore_outlier_count": 0,
+    "isolation_forest_outliers": 33,
+    "treatment_policy": "Preserved genuine structural shocks (e.g. Onam festival demand, monsoon supply disruption) while bounding non-physical negative/zero prices"
+  },
+  "Rubber": {
+    "record_count": 2192,
+    "mean_price": 21003.58,
+    "std_price": 2408.18,
+    "iqr_bounds": [
+      13665.36,
+      28112.41
+    ],
+    "iqr_outlier_count": 0,
+    "zscore_outlier_count": 0,
+    "isolation_forest_outliers": 33,
+    "treatment_policy": "Preserved genuine structural shocks (e.g. Onam festival demand, monsoon supply disruption) while bounding non-physical negative/zero prices"
+  }
+}

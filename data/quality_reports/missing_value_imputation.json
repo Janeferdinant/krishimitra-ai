@@ -1,0 +1,5 @@
+{
+  "missing_values_before_imputation": 0,
+  "missing_values_after_imputation": 0,
+  "imputation_strategy": "Chronological grouping by [commodity, market] using Forward Fill (ffill) to ensure zero lookahead bias, followed by backward fill for initial boundary values."
+}

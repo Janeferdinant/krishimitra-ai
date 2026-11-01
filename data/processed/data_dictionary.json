@@ -1,0 +1,71 @@
+{
+  "date": {
+    "type": "string (YYYY-MM-DD)",
+    "description": "Trading calendar date of wholesale mandi transactions"
+  },
+  "state": {
+    "type": "string",
+    "description": "State of India (Primary: Kerala)"
+  },
+  "district": {
+    "type": "string",
+    "description": "Administrative district hosting the agricultural APMC market"
+  },
+  "market": {
+    "type": "string",
+    "description": "Registered APMC Mandi, Spices Yard, or Wholesale Terminal Market"
+  },
+  "commodity": {
+    "type": "string",
+    "description": "Agricultural/plantation commodity name (Arecanut, Black Pepper, Copra, Banana, Rubber, Cardamom)"
+  },
+  "variety": {
+    "type": "string",
+    "description": "Commercial trade variety or grade (e.g., Chali, Garbled, RSS-4, Nendran)"
+  },
+  "arrivals_tonnes": {
+    "type": "float",
+    "unit": "Metric Tonnes",
+    "description": "Daily registered physical arrival volume at the mandi"
+  },
+  "min_price": {
+    "type": "float",
+    "unit": "INR per Quintal (100 kg)",
+    "description": "Minimum transaction price recorded on trading day"
+  },
+  "max_price": {
+    "type": "float",
+    "unit": "INR per Quintal (100 kg)",
+    "description": "Maximum transaction price recorded on trading day"
+  },
+  "modal_price": {
+    "type": "float",
+    "unit": "INR per Quintal (100 kg)",
+    "description": "Modal wholesale transaction price (primary forecasting target)"
+  },
+  "temp_mean": {
+    "type": "float",
+    "unit": "Degrees Celsius",
+    "description": "Daily mean surface air temperature from NASA POWER / IMD"
+  },
+  "temp_max": {
+    "type": "float",
+    "unit": "Degrees Celsius",
+    "description": "Daily maximum surface air temperature"
+  },
+  "temp_min": {
+    "type": "float",
+    "unit": "Degrees Celsius",
+    "description": "Daily minimum surface air temperature"
+  },
+  "rainfall_mm": {
+    "type": "float",
+    "unit": "Millimeters",
+    "description": "Daily accumulated precipitation"
+  },
+  "rel_humidity_pct": {
+    "type": "float",
+    "unit": "Percentage (%)",
+    "description": "Daily average surface relative humidity"
+  }
+}
