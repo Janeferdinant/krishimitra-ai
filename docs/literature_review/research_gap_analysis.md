@@ -60,3 +60,4 @@ Through an exhaustive review of 32 benchmark publications and government reports
 | Best Market Arbitrage | No | No | Distance list only | **Net Profit Optimization (Price minus Freight Cost)** |
 | Intelligent Crop Planning | Qualitative advisory | No | No | **Quantitative Multi-Criteria Decision Analysis** |
 | System Implementation | Paper / SMS Broadcast | Academic Research Code | Static Web Portal | **Full-Stack Reactive Web Application & OpenAPI Backend** |
+

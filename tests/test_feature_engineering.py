@@ -52,3 +52,4 @@ def test_feature_engineering_pipeline():
     # Verify exported analytical features file exists
     features_path = os.path.join("data", "processed", "analytical_features_dataset.csv")
     assert os.path.exists(features_path), f"Features dataset missing at {features_path}"
+

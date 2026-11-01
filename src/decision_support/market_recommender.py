@@ -132,3 +132,4 @@ class SpatialMarketRecommender:
             best_market["arbitrage_advice"] = f"Sell locally at {local_market['market']}: Distance transit cost exceeds price premium."
             
         return results
+

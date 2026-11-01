@@ -285,3 +285,4 @@ def acquire_market_and_weather_data(output_dir: str = "data/raw") -> tuple[pd.Da
 if __name__ == "__main__":
     df, meta = acquire_market_and_weather_data()
     print(f"Acquired {len(df)} records across {df['commodity'].nunique()} commodities and {df['market'].nunique()} markets.")
+

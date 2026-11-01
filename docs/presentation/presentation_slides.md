@@ -174,3 +174,4 @@
 - Empirical Evidence: Hybrid SARIMA + XGBoost reduces error by 66% over classical statistical baselines.
 - Key Citations: Sabu & Manoj Kumar (2020), Ananthi et al. (2020), TNAU RKVY (2018), UAS Bangalore (2021), Liu et al. (2022).
 - Project Repository: Fully reproducible code, datasets, reports, IEEE paper, and test suite.
+

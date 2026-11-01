@@ -44,3 +44,4 @@ def check_price_alert(req: AlertCheckRequest):
         condition=req.condition
     )
     return AlertCheckResponse(**res)
+

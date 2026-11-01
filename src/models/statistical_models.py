@@ -76,3 +76,4 @@ class HoltWintersModel:
             raise ValueError("Model must be fitted before predict.")
         forecast = self.model_res.forecast(horizon)
         return np.maximum(np.array(forecast), 10.0)
+

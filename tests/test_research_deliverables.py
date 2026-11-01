@@ -36,3 +36,4 @@ def test_ieee_paper_and_experimental_reports():
         exp_text = f.read()
     for i in range(1, 11):
         assert f"Experiment {i}" in exp_text or f"Experiment {i}:" in exp_text, f"Missing Experiment {i} in experimental analysis report"
+

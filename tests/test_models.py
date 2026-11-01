@@ -71,3 +71,4 @@ def test_models_suite_and_evaluation():
     assert "natural_language_advisory" in explanation
     assert len(explanation["feature_contributions"]) > 0
     assert len(explanation["natural_language_advisory"]) > 20
+

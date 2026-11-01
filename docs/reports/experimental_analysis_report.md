@@ -155,3 +155,4 @@ This report provides the full experimental analysis of ten structured scientific
   - Standard ARIMA: Under-predicted Onam peak by 34.2% (lagged response).
   - KrishiMitra AI (with `is_onam` indicator & arrival momentum): Predicted peak within **4.1% of actual peak price** (₹5,200/Qtl predicted vs ₹5,410/Qtl actual).
 - **Conclusion:** Incorporating sociocultural and festival calendar harmonics is crucial for agricultural market intelligence in India.
+

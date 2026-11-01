@@ -62,3 +62,4 @@ Agricultural commodity price forecasting and market intelligence present high no
 
 3. **Explainability & Decision Support:**
    - SHAP (Shapley Additive exPlanations) provides mathematically sound feature attribution, but must be translated into farmer-accessible natural language advice (e.g., *"Expected price increase driven by 35% decline in regional arrivals and favorable harvest timing"*).
+

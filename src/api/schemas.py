@@ -75,3 +75,4 @@ class AlertCheckResponse(BaseModel):
     condition: str
     triggered: bool
     message: str
+

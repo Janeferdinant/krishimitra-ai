@@ -45,3 +45,4 @@ def test_eda_engine_and_diagnostics():
     assert len(content) > 2000, "EDA report should be comprehensive and detailed"
     assert "Augmented Dickey-Fuller" in content
     assert "Elasticity" in content
+

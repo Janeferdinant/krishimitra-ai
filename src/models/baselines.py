@@ -60,3 +60,4 @@ class MovingAverageBaseline:
         
     def predict(self, horizon: int) -> np.ndarray:
         return np.full(horizon, self.mean_val)
+

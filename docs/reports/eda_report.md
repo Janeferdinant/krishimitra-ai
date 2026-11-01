@@ -61,7 +61,7 @@ where $T_t$ represents the secular trend, $S_t$ is the 365-day annual cyclical h
 ## 5. Arrival-Price Elasticity Analysis (Supply & Demand Dynamics)
 
 Using log-log econometric regression:
-$$\ln(	ext{Price}_t) = lpha + \epsilon \cdot \ln(	ext{Arrivals}_t) + u_t$$
+$$\ln(\text{Price}_t) = \alpha + \epsilon \cdot \ln(\text{Arrivals}_t) + u_t$$
 where $\epsilon$ denotes the price elasticity of market arrivals.
 
 | Commodity | Empirical Elasticity Coefficient ($\epsilon$) | Economic Implication |
@@ -70,7 +70,7 @@ where $\epsilon$ denotes the price elasticity of market arrivals.
 | Copra | **-0.189** | Inelastic response; price adjusts negatively to arrival surges. |
 | Black Pepper | **-0.086** | Inelastic response; price adjusts negatively to arrival surges. |
 
-> **Conclusion on Elasticity:** As predicted by microeconomic theory and prior literature (He et al., 2022; Xiong et al., 2021), the elasticity coefficients are negative ($\epsilon pprox -0.15$ to $-0.32$). A 10% increase in daily mandi arrival volume correlates with a 1.5% to 3.2% downward adjustment in modal transaction price. This confirms that **market arrival volume is an indispensable exogenous feature** for multi-step forecasting models.
+> **Conclusion on Elasticity:** As predicted by microeconomic theory and prior literature (He et al., 2022; Xiong et al., 2021), the elasticity coefficients are negative ($\epsilon \approx -0.15$ to $-0.32$). A 10% increase in daily mandi arrival volume correlates with a 1.5% to 3.2% downward adjustment in modal transaction price. This confirms that **market arrival volume is an indispensable exogenous feature** for multi-step forecasting models.
 
 ---
 

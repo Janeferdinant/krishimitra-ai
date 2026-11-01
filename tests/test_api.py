@@ -80,3 +80,4 @@ def test_fastapi_endpoints():
     assert res.status_code == 200
     admin = res.json()
     assert "model_leaderboard" in admin
+

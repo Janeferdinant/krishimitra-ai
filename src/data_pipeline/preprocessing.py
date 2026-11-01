@@ -206,3 +206,4 @@ if __name__ == "__main__":
     raw, _ = acquire_market_and_weather_data()
     cleaned, report = preprocess_market_data(raw)
     print("Preprocessing completed:", report)
+

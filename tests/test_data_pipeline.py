@@ -55,3 +55,4 @@ def test_data_pipeline_outputs_and_quality():
     
     outlier_path = os.path.join("data", "quality_reports", "outlier_analysis.json")
     assert os.path.exists(outlier_path), f"Outlier report missing at {outlier_path}"
+

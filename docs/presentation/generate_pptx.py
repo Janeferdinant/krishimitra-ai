@@ -309,3 +309,4 @@ def create_presentation(output_path: str = "docs/presentation/KrishiMitra_AI_YIP
 
 if __name__ == "__main__":
     create_presentation()
+

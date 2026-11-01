@@ -727,3 +727,4 @@ function renderFallbackLeaderboard() {
   ];
   renderLeaderboard(fallback);
 }
+

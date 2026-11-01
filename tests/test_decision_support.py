@@ -57,3 +57,4 @@ def test_decision_support_suite():
     )
     assert window_res["recommendation"] == "HOLD"
     assert window_res["optimal_day"] == 4
+

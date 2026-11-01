@@ -138,3 +138,4 @@ class IntelligentCropPlanner:
             
         recommendations.sort(key=lambda x: x["suitability_score"], reverse=True)
         return recommendations
+

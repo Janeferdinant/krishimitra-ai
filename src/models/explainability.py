@@ -77,3 +77,4 @@ class AgriculturalShapExplainer:
                 
         sentences.append("Farmer Recommendation: Monitor nearby mandis and consider favorable selling windows when arrivals dip.")
         return "\n".join(sentences)
+

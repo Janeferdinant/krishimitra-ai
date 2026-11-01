@@ -35,3 +35,4 @@ def get_model_leaderboard():
         "active_commodities": 6,
         "total_historical_records": 19728
     }
+

@@ -232,3 +232,4 @@ For the production **KrishiMitra AI** platform, the ensemble pipeline employs:
 
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(content)
+

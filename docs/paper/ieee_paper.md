@@ -305,3 +305,4 @@ Future extensions include:
 30. G. K. Jha and K. Sinha, "Agricultural price volatility modeling using machine learning: An empirical evaluation of Indian mandis," *Current Science*, vol. 122, no. 7, pp. 803–812, 2022.
 31. S. Al-Dahidi, et al., "Extreme Gradient Boosting (XGBoost) and LightGBM for agricultural price and yield forecasting: A benchmark," *Expert Systems with Applications*, vol. 213, p. 118930, 2023.
 32. K. V. Praveen, et al., "Digital agricultural market platforms: Evaluating e-NAM price realization and farmer market choice," *Indian Journal of Agricultural Economics*, vol. 78, no. 2, pp. 185–201, 2023.
+

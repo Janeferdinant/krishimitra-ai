@@ -24,3 +24,4 @@ def plan_crops(req: CropPlanRequest):
         land_area_acres=req.land_area_acres,
         recommendations=recs
     )
+

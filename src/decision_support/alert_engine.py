@@ -78,3 +78,4 @@ class AlertEngine:
             "expected_gain_inr_per_qtl": round(gain_potential, 2),
             "advisory": action_text
         }
+
