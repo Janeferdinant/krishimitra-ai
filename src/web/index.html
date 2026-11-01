@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KrishiMitra AI – Agricultural Market Intelligence & Price Forecasting Platform | YIP 9.0</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Plotly.js CDN -->
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: { 800: '#143e33', 900: '#0d2821' },
+            emerald: { 600: '#059669', 700: '#047857' },
+            amber: { 600: '#d97706', 700: '#b45309' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#f8faf8] text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Top Glass Header -->
+  <header class="glass-header text-white sticky top-0 z-50 px-4 lg:px-8 py-3.5 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+          <i data-lucide="sprout" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl font-bold tracking-tight text-white">KrishiMitra AI</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 font-medium">YIP 9.0 Research</span>
+          </div>
+          <p class="text-xs text-emerald-100/70">കാർഷിക വിപണി വില പ്രവചനവും ഇന്റലിജൻസ് സംവിധാനവും</p>
+        </div>
+      </div>
+
+      <!-- Quick Meteorological Banner -->
+      <div class="flex items-center gap-4 text-xs">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 border border-white/10">
+          <i data-lucide="cloud-rain" class="w-4 h-4 text-emerald-300"></i>
+          <span>Kerala IMD: <strong class="text-emerald-200" id="header-weather">Monsoon Active (28.4°C, 88% RH)</strong></span>
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-400/20 text-emerald-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Live Model Service: <strong>Hybrid SARIMA+XGB</strong></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tab Bar -->
+  <div class="bg-white border-b border-emerald-900/10 shadow-sm sticky top-[69px] z-40 overflow-x-auto">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-2 flex items-center gap-1.5">
+      <button class="tab-btn nav-tab-active px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="farmer-dashboard">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Farmer Dashboard
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="price-forecasting">
+        <i data-lucide="trending-up" class="w-4 h-4"></i> Crop Price Forecasting
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="market-intelligence">
+        <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Market Intelligence
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="crop-planning">
+        <i data-lucide="calendar" class="w-4 h-4"></i> Intelligent Crop Planning
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="market-recommender">
+        <i data-lucide="map-pin" class="w-4 h-4"></i> Best Market Arbitrage
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="explainable-ai">
+        <i data-lucide="brain-circuit" class="w-4 h-4"></i> Explainable AI (SHAP)
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="price-alerts">
+        <i data-lucide="bell" class="w-4 h-4"></i> Price Alerts
+      </button>
+      <button class="tab-btn text-slate-600 px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-medium flex items-center gap-1.5 whitespace-nowrap" data-tab="admin-research">
+        <i data-lucide="flask-conical" class="w-4 h-4"></i> Research & Leaderboard
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl mx-auto w-full px-4 lg:px-8 py-6">
+
+    <!-- MODULE 1: FARMER DASHBOARD -->
+    <section id="panel-farmer-dashboard" class="tab-panel space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-bold text-forest-800">Farmer Command Center</h2>
+          <p class="text-sm text-slate-500">Real-time spot mandi prices, short-term trends, and crop advisory for Kerala farmers</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-500">Select Region:</span>
+          <select id="dashboard-district-select" class="text-xs bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-medium shadow-sm">
+            <option value="Palakkad">Palakkad District</option>
+            <option value="Wayanad">Wayanad District</option>
+            <option value="Idukki">Idukki District</option>
+            <option value="Kozhikode">Kozhikode District</option>
+            <option value="Thrissur">Thrissur District</option>
+            <option value="Kottayam">Kottayam District</option>
+            <option value="Kasaragod">Kasaragod District</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quick Spot Price Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="dashboard-commodity-cards">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Two-Column Section: Trend Preview & Advisories -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 glass-panel p-5">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="font-bold text-slate-800">Statewide Commodity Price Volatility Index</h3>
+              <p class="text-xs text-slate-500">Normalized price momentum across high-value Kerala plantation commodities</p>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold">AGMARKNET Synced</span>
+          </div>
+          <div id="dashboard-overview-chart" style="height: 320px;"></div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="glass-panel p-5 bg-gradient-to-br from-emerald-50/80 to-white">
+            <div class="flex items-center gap-2.5 text-emerald-800 font-bold text-sm mb-2">
+              <i data-lucide="lightbulb" class="w-4 h-4 text-emerald-600"></i> Smart Agro-Advisory
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed" id="dashboard-advisory-text">
+              <strong>Black Pepper (Garbled):</strong> High export inquiry in Kochi terminal is keeping spot prices firm above ₹54,000/Qtl. Farmers in Wayanad are advised to hold ungarbled pepper until post-harvest supplies stabilize next week.
+            </p>
+          </div>
+
+          <div class="glass-panel p-5">
+            <h4 class="font-bold text-slate-800 text-xs mb-3 uppercase tracking-wider text-slate-400">Market Selling Window Alert</h4>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 border border-emerald-100">
+                <div>
+                  <div class="text-xs font-bold text-emerald-900">Banana (Nendran)</div>
+                  <div class="text-[11px] text-emerald-700">Projected Peak: +12% in 7 days</div>
+                </div>
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-600 text-white">HOLD</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-amber-50 border border-amber-100">
+                <div>
+                  <div class="text-xs font-bold text-amber-900">Copra (Milling)</div>
+                  <div class="text-[11px] text-amber-700">Stable window: ₹11,500/Qtl</div>
+                </div>
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-600 text-white">SELL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 2: CROP PRICE FORECASTING -->
+    <section id="panel-price-forecasting" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <h2 class="text-2xl font-bold text-forest-800 mb-1">Multi-Horizon Price Forecasting Engine</h2>
+        <p class="text-sm text-slate-500 mb-6">Select commodity, APMC mandi, and horizon to generate calibrated price forecasts with 80% & 95% confidence intervals</p>
+
+        <!-- Filter Controls Form -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Commodity / വിള</label>
+            <select id="forecast-commodity-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 font-medium shadow-sm">
+              <option value="Arecanut">Arecanut / അടയ്ക്ക (Chali)</option>
+              <option value="Black Pepper">Black Pepper / കുരുമുളക് (Garbled)</option>
+              <option value="Copra">Copra / കൊപ്ര (Milling)</option>
+              <option value="Banana">Banana / നേന്ത്രപ്പഴം (Nendran)</option>
+              <option value="Rubber">Rubber / റബ്ബർ (RSS-4)</option>
+              <option value="Cardamom">Cardamom / ഏലം (Small 7-8mm)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">APMC Mandi / വിപണി</label>
+            <select id="forecast-market-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 font-medium shadow-sm">
+              <option value="Vatakara APMC">Vatakara APMC (Kozhikode)</option>
+              <option value="Kochi Terminal Yard">Kochi Terminal Yard (Ernakulam)</option>
+              <option value="Sulthan Bathery Mandi">Sulthan Bathery Mandi (Wayanad)</option>
+              <option value="Palakkad APMC">Palakkad APMC (Palakkad)</option>
+              <option value="Nedumkandam Spices Market">Nedumkandam Spices Market (Idukki)</option>
+              <option value="Kottayam Rubber Yard">Kottayam Rubber Yard (Kottayam)</option>
+              <option value="Kasaragod Mandi">Kasaragod Mandi (Kasaragod)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Forecast Horizon / കാലാവധി</label>
+            <select id="forecast-horizon-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 font-medium shadow-sm">
+              <option value="7">7 Days (Immediate Harvest)</option>
+              <option value="15" selected>15 Days (Short-term Marketing)</option>
+              <option value="30">30 Days (Monthly Planning)</option>
+              <option value="60">60 Days (Pre-Harvest Decision)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">AI Model Architecture</label>
+            <select id="forecast-model-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 font-medium shadow-sm">
+              <option value="hybrid" selected>Hybrid SARIMA + XGBoost (Best)</option>
+              <option value="lightgbm">LightGBM Regressor (Fast)</option>
+              <option value="xgboost">XGBoost Regressor</option>
+              <option value="sarima">SARIMA(1,1,1) Econometric</option>
+            </select>
+          </div>
+
+          <div class="flex items-end">
+            <button id="btn-run-forecast" class="w-full bg-forest-800 hover:bg-forest-900 text-white font-semibold text-xs py-2.5 px-4 rounded-lg shadow flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="play" class="w-3.5 h-3.5"></i> Run Forecast
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6" id="forecast-metric-strip">
+          <div class="p-3 rounded-lg bg-emerald-50/60 border border-emerald-100">
+            <div class="text-[11px] text-emerald-800 font-semibold">Current Modal Price</div>
+            <div class="text-lg font-bold text-emerald-950" id="fc-current-price">₹42,000 / Qtl</div>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-50/60 border border-blue-100">
+            <div class="text-[11px] text-blue-800 font-semibold">Predicted Price at Horizon</div>
+            <div class="text-lg font-bold text-blue-950" id="fc-predicted-price">₹42,850 / Qtl</div>
+          </div>
+          <div class="p-3 rounded-lg bg-amber-50/60 border border-amber-100">
+            <div class="text-[11px] text-amber-800 font-semibold">80% Confidence Range</div>
+            <div class="text-xs font-bold text-amber-950" id="fc-ci-80">₹41,920 – ₹43,780</div>
+          </div>
+          <div class="p-3 rounded-lg bg-purple-50/60 border border-purple-100">
+            <div class="text-[11px] text-purple-800 font-semibold">Projected Net Change</div>
+            <div class="text-lg font-bold text-purple-950" id="fc-net-change">+₹850 (+2.0%)</div>
+          </div>
+        </div>
+
+        <!-- Interactive Forecast Plot -->
+        <div id="forecast-plot" style="height: 440px;" class="mb-4"></div>
+
+        <!-- Plain Language Advisory Callout -->
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-start gap-3">
+          <i data-lucide="info" class="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0"></i>
+          <span id="forecast-advisory-callout">Generating forecast insights...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 3: MARKET INTELLIGENCE -->
+    <section id="panel-market-intelligence" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <h2 class="text-2xl font-bold text-forest-800 mb-1">Agricultural Market Intelligence & Analytics</h2>
+        <p class="text-sm text-slate-500 mb-6">Mandi price dispersion, arrival volume inverse elasticity, and seasonal trend dynamics</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div class="p-4 rounded-xl bg-white border border-slate-200">
+            <h3 class="font-bold text-sm text-slate-800 mb-2">Cross-Mandi Price Dispersion (Boxplot Analysis)</h3>
+            <div id="market-dispersion-plot" style="height: 320px;"></div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white border border-slate-200">
+            <h3 class="font-bold text-sm text-slate-800 mb-2">Market Arrival vs Modal Price Elasticity Curve</h3>
+            <div id="market-elasticity-plot" style="height: 320px;"></div>
+          </div>
+        </div>
+
+        <!-- Macro Indicators Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border border-slate-200 rounded-lg overflow-hidden">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider">
+              <tr>
+                <th class="p-3">Commodity</th>
+                <th class="p-3">Primary Kerala Market</th>
+                <th class="p-3">Mean Modal Price</th>
+                <th class="p-3">Daily Arrival Mean</th>
+                <th class="p-3">Price Elasticity (ε)</th>
+                <th class="p-3">Annualized Volatility</th>
+                <th class="p-3">Harvest Supply Peak</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white" id="intelligence-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 4: INTELLIGENT CROP PLANNING -->
+    <section id="panel-crop-planning" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <h2 class="text-2xl font-bold text-forest-800 mb-1">Intelligent Crop Planning Decision Support</h2>
+        <p class="text-sm text-slate-500 mb-6">Multi-criteria optimization matching your land, season, and risk profile with projected market revenues</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-emerald-50/40 border border-emerald-100 mb-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Your District / ജില്ല</label>
+            <select id="plan-district-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+              <option value="Palakkad">Palakkad</option>
+              <option value="Wayanad">Wayanad</option>
+              <option value="Idukki">Idukki</option>
+              <option value="Kozhikode">Kozhikode</option>
+              <option value="Thrissur">Thrissur</option>
+              <option value="Kottayam">Kottayam</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Target Season / കൃഷി സീസൺ</label>
+            <select id="plan-season-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+              <option value="Southwest Monsoon">Southwest Monsoon (ഇടവപ്പാതി)</option>
+              <option value="Northeast Monsoon">Northeast Monsoon (തുലാവർഷം)</option>
+              <option value="Summer / Pre-Monsoon">Summer / Pre-Monsoon (വേനൽ)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Land Area (Acres) / വിസ്തീർണ്ണം</label>
+            <input type="number" id="plan-land-acres" value="2.5" min="0.5" max="50" step="0.5" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Risk Appetite / റിസ്ക് താൽപ്പര്യം</label>
+            <select id="plan-risk-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+              <option value="low">Low (Prioritize Stable Cash Crops)</option>
+              <option value="moderate" selected>Moderate (Balanced Profit & Risk)</option>
+              <option value="high">High (High Volatility Spices / Fruits)</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btn-calc-crop-plan" class="bg-forest-800 hover:bg-forest-900 text-white font-semibold text-xs py-2 px-5 rounded-lg shadow mb-6">
+          Calculate Optimal Crop Recommendations
+        </button>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="crop-plan-cards">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 5: BEST MARKET RECOMMENDATION (SPATIAL ARBITRAGE) -->
+    <section id="panel-market-recommender" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <h2 class="text-2xl font-bold text-forest-800 mb-1">Spatial Market Arbitrage & Best Mandi Recommender</h2>
+        <p class="text-sm text-slate-500 mb-6">Calculates net farm-gate realization by deducting road freight costs from destination mandi prices</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200 mb-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Origin District (Farm Location)</label>
+            <select id="arb-origin-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+              <option value="Wayanad">Wayanad (Highland Spices)</option>
+              <option value="Palakkad">Palakkad (Agri Plains)</option>
+              <option value="Idukki">Idukki (Cardamom / Spices)</option>
+              <option value="Kozhikode">Kozhikode (Coastal / Arecanut)</option>
+              <option value="Kottayam">Kottayam (Rubber Belt)</option>
+              <option value="Kasaragod">Kasaragod (Northern Plantation)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Produce Commodity</label>
+            <select id="arb-commodity-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+              <option value="Black Pepper">Black Pepper (Garbled)</option>
+              <option value="Arecanut">Arecanut (Chali)</option>
+              <option value="Banana">Banana (Nendran)</option>
+              <option value="Copra">Copra (Milling)</option>
+              <option value="Rubber">Rubber (RSS-4)</option>
+              <option value="Cardamom">Cardamom (Small)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Quantity to Sell (Quintals)</label>
+            <input type="number" id="arb-quantity-input" value="15.0" min="1" max="500" step="1" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+          </div>
+        </div>
+
+        <button id="btn-calc-arbitrage" class="bg-forest-800 hover:bg-forest-900 text-white font-semibold text-xs py-2 px-5 rounded-lg shadow mb-6">
+          Evaluate Regional Market Arbitrage
+        </button>
+
+        <!-- Arbitrage Recommendation Box -->
+        <div id="arbitrage-summary-banner" class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs mb-6">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Arbitrage Comparison Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border border-slate-200 rounded-lg overflow-hidden">
+            <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider">
+              <tr>
+                <th class="p-3">Destination Mandi / Yard</th>
+                <th class="p-3">Distance (km)</th>
+                <th class="p-3">Predicted Price (₹/Qtl)</th>
+                <th class="p-3">Logistics Cost (₹/Qtl)</th>
+                <th class="p-3 font-bold text-emerald-900">Net Realization (₹/Qtl)</th>
+                <th class="p-3">Total Net Margin (₹)</th>
+                <th class="p-3">Arbitrage Verdict</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white" id="arbitrage-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 6: EXPLAINABLE AI (SHAP) -->
+    <section id="panel-explainable-ai" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <h2 class="text-2xl font-bold text-forest-800 mb-1">Explainable AI (XAI) Feature Attribution</h2>
+        <p class="text-sm text-slate-500 mb-6">Decomposes model predictions using Game-Theoretic SHAP (Shapley Additive exPlanations) into plain-language farmer drivers</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="glass-panel p-5 space-y-4">
+            <h3 class="font-bold text-slate-800 text-sm">Select Observation to Explain</h3>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Commodity</label>
+              <select id="xai-commodity-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+                <option value="Banana">Banana (Nendran)</option>
+                <option value="Arecanut">Arecanut (Chali)</option>
+                <option value="Black Pepper">Black Pepper (Garbled)</option>
+                <option value="Copra">Copra (Milling)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">APMC Market</label>
+              <select id="xai-market-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+                <option value="Palakkad APMC">Palakkad APMC</option>
+                <option value="Vatakara APMC">Vatakara APMC</option>
+                <option value="Kochi Terminal Yard">Kochi Terminal Yard</option>
+              </select>
+            </div>
+            <button id="btn-run-xai" class="w-full bg-forest-800 hover:bg-forest-900 text-white font-semibold text-xs py-2 rounded-lg shadow">
+              Extract SHAP Drivers
+            </button>
+          </div>
+
+          <div class="lg:col-span-2 glass-panel p-5">
+            <h3 class="font-bold text-slate-800 text-sm mb-2">SHAP Marginal Feature Contributions</h3>
+            <div id="xai-shap-chart" style="height: 300px;"></div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-5 bg-emerald-50/50 border border-emerald-100">
+          <h3 class="font-bold text-sm text-emerald-900 mb-2 flex items-center gap-2">
+            <i data-lucide="message-square-quote" class="w-4 h-4 text-emerald-600"></i> Plain-Language Agricultural Advisory
+          </h3>
+          <pre id="xai-natural-text" class="whitespace-pre-wrap font-sans text-xs text-slate-700 leading-relaxed"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 7: PRICE ALERTS -->
+    <section id="panel-price-alerts" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <h2 class="text-2xl font-bold text-forest-800 mb-1">Smart Price Threshold & Window Alerts</h2>
+        <p class="text-sm text-slate-500 mb-6">Configure custom SMS / push price triggers and evaluate whether to sell today or hold for peak market window</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="p-5 rounded-xl bg-white border border-slate-200 space-y-4">
+            <h3 class="font-bold text-sm text-slate-800">Set Custom Price Threshold Alert</h3>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Commodity</label>
+                <select id="alert-comm-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2">
+                  <option value="Arecanut">Arecanut (Chali)</option>
+                  <option value="Black Pepper">Black Pepper (Garbled)</option>
+                  <option value="Banana">Banana (Nendran)</option>
+                  <option value="Copra">Copra (Milling)</option>
+                  <option value="Rubber">Rubber (RSS-4)</option>
+                </select>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Target Price (₹/Qtl)</label>
+                  <input type="number" id="alert-price-input" value="43000" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Trigger Condition</label>
+                  <select id="alert-cond-select" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2">
+                    <option value="above">Crosses Above (Selling Target)</option>
+                    <option value="below">Crosses Below (Floor Alert)</option>
+                  </select>
+                </div>
+              </div>
+              <button id="btn-save-alert" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-2 rounded-lg">
+                Activate Alert Trigger
+              </button>
+            </div>
+            <div id="alert-result-box" class="p-3 rounded-lg bg-slate-50 text-xs text-slate-600">
+              Select parameters and click Activate.
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl bg-white border border-slate-200 space-y-4">
+            <h3 class="font-bold text-sm text-slate-800">Storage vs Immediate Selling Window Advisor</h3>
+            <p class="text-xs text-slate-500">Calculates net gain after subtracting daily storage and deterioration cost (₹3.5/Qtl/day)</p>
+            <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2" id="selling-window-card">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 8: RESEARCH & ADMIN LEADERBOARD -->
+    <section id="panel-admin-research" class="tab-panel hidden space-y-6">
+      <div class="glass-panel p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 class="text-2xl font-bold text-forest-800">Model Governance & Research Leaderboard</h2>
+            <p class="text-sm text-slate-500">Empirical benchmark across 11 forecasting algorithms with chronological walk-forward cross validation</p>
+          </div>
+          <div class="text-xs text-slate-500">
+            Validation Protocol: <strong>Walk-Forward (80/20 Chronological Split)</strong>
+          </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full text-left text-xs border border-slate-200 rounded-lg overflow-hidden">
+            <thead class="bg-forest-800 text-white font-bold uppercase tracking-wider">
+              <tr>
+                <th class="p-3">Rank</th>
+                <th class="p-3">Algorithm</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">RMSE (₹/Qtl)</th>
+                <th class="p-3">MAPE (%)</th>
+                <th class="p-3">R² Score</th>
+                <th class="p-3">Latency (ms)</th>
+                <th class="p-3">Deployment Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white" id="admin-leaderboard-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Data Quality Monitor -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl bg-white border border-slate-200">
+            <div class="text-xs text-slate-500 font-semibold">Total Verified Records</div>
+            <div class="text-xl font-bold text-slate-800 mt-1">19,728 Daily Observations</div>
+            <div class="text-[11px] text-emerald-600 mt-0.5">2020-01-01 to 2025-12-31</div>
+          </div>
+          <div class="p-4 rounded-xl bg-white border border-slate-200">
+            <div class="text-xs text-slate-500 font-semibold">Missing Value Treatment</div>
+            <div class="text-xl font-bold text-slate-800 mt-1">0 Nulls in Cleaned Set</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">Zero-Lookahead Forward Fill (ffill)</div>
+          </div>
+          <div class="p-4 rounded-xl bg-white border border-slate-200">
+            <div class="text-xs text-slate-500 font-semibold">Model Artifacts</div>
+            <div class="text-xl font-bold text-slate-800 mt-1">Serialized & Checkpointed</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">artifacts/trained_models/*.pkl</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-forest-900 text-emerald-100/60 text-xs py-6 border-t border-emerald-950 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div>
+        <p class="font-medium text-emerald-100">KrishiMitra AI – Kerala Young Innovators Programme (YIP 9.0)</p>
+        <p class="text-[11px] text-emerald-300/50 mt-0.5">A Multidisciplinary Research, Development & Publication Initiative for Agricultural Market Intelligence</p>
+      </div>
+      <div class="flex items-center gap-4 text-[11px]">
+        <span>IEEE Transactions Standards</span>
+        <span>•</span>
+        <span>AGMARKNET & NASA POWER Integrations</span>
+        <span>•</span>
+        <span>Kerala APMC Network</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
